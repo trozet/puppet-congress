@@ -235,7 +235,7 @@ class congress(
   $auth_type                          = 'keystone',
   $auth_uri                           = false,
   $identity_uri                       = false,
-  $keystone_tenant                    = 'services',
+  $admin_tenant_name                  = 'services',
   $keystone_user                      = 'congress',
   $manage_service                     = true,
   $enabled                            = true,
@@ -265,6 +265,7 @@ class congress(
   $amqp_durable_queues                = false,
   $service_provider                   = $::congress::params::service_provider,
   $service_name                       = $::congress::params::service_name,
+  $sync_db                            = true,
 ) inherits congress::params {
   congress_config {
     'DEFAULT/drivers'     : value => 'congress.datasources.neutronv2_driver.NeutronV2Driver,congress.datasources.glancev2_driver.GlanceV2Driver,congress.datasources.nova_driver.NovaDriver,congress.datasources.keystone_driver.KeystoneDriver,congress.datasources.ceilometer_driver.CeilometerDriver,congress.datasources.cinder_driver.CinderDriver';
@@ -275,7 +276,6 @@ class congress(
 
   if $identity_uri {
     congress_config { 'keystone_authtoken/identity_uri': value => $identity_uri; }
-    congress_config { 'keystone_authtoken/auth_url'    : value => $identity_uri; }
   } else {
     congress_config { 'keystone_authtoken/identity_uri': ensure => absent; }
   }
@@ -288,9 +288,9 @@ class congress(
 
   if $auth_type == 'keystone' {
     congress_config {
-      'keystone_authtoken/project_name' : value => $keystone_tenant;
-      'keystone_authtoken/username'     : value => $keystone_user;
-      'keystone_authtoken/password'     : value => $keystone_password, secret => true;
+      'keystone_authtoken/admin_tenant_name' : value => $admin_tenant_name;
+      'keystone_authtoken/admin_user'        : value => $keystone_user;
+      'keystone_authtoken/admin_password'    : value => $keystone_password, secret => true;
     }
   }
 
