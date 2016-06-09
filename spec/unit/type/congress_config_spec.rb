@@ -52,13 +52,12 @@ describe 'Puppet::Type.type(:congress_config)' do
 
   it 'should autorequire the package that install the file' do
     catalog = Puppet::Resource::Catalog.new
-    package = Puppet::Type.type(:package).new(:name => 'congress-common')
+    package = Puppet::Type.type(:package).new(:name => 'congress')
     catalog.add_resource package, @congress_config
     dependency = @congress_config.autorequire
     expect(dependency.size).to eq(1)
     expect(dependency[0].target).to eq(@congress_config)
     expect(dependency[0].source).to eq(package)
   end
-
 
 end

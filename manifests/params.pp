@@ -1,31 +1,28 @@
-#
-# This class contains the platform differences for congress
+# Parameters for puppet-congress
 #
 class congress::params {
-  $client_package_name = 'python-congressclient'
+
+  $client_package_name = 'python-ceilometerclient'
 
   case $::osfamily {
-    'Debian': {
-      $package_name                 = 'congress'
-      $service_name                 = 'congress'
-      $python_memcache_package_name = 'python-memcache'
-      $sqlite_package_name          = 'python-pysqlite2'
-      $paste_config                 = undef
-      case $::operatingsystem {
-        'Debian': {
-          $service_provider            = undef
-        }
-        default: {
-          $service_provider            = 'upstart'
-        }
-      }
-    }
     'RedHat': {
-      $package_name                 = 'openstack-congress'
-      $service_name                 = 'openstack-congress'
-      $python_memcache_package_name = 'python-memcached'
-      $sqlite_package_name          = undef
-      $service_provider             = undef
+      $common_package_name     = 'openstack-congress-common'
+      $api_package_name        = 'openstack-congress-api'
+      $api_service_name        = 'openstack-congress-api'
+
+      $congress_wsgi_script_path   = '/var/www/cgi-bin/congress'
+      $congress_wsgi_script_source = '/usr/lib/python2.7/site-packages/congress/api/app.wsgi'
     }
-  }
+    'Debian': {
+      $common_package_name     = 'congress-common'
+      $api_package_name        = 'congress-api'
+      $api_service_name        = 'congress-api'
+      $congress_wsgi_script_path   = '/usr/lib/cgi-bin/congress'
+      $congress_wsgi_script_source = '/usr/share/congress-common/app.wsgi'
+    }
+    default: {
+      fail("Unsupported osfamily: ${::osfamily} operatingsystem")
+    }
+
+  } # Case $::osfamily
 }

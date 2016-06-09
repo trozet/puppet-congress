@@ -17,14 +17,20 @@
 #     DEFAULT/bar:
 #       value: barValue
 #
+# [*congress_api_paste_ini*]
+#   (optional) Allow configuration of /etc/congress/api_paste.ini options.
+#
 #   NOTE: The configuration MUST NOT be already handled by this module
 #   or Puppet catalog compilation will fail with duplicate resources.
 #
 class congress::config (
-  $congress_config = {},
+  $congress_config        = {},
+  $congress_api_paste_ini = {},
 ) {
 
   validate_hash($congress_config)
+  validate_hash($congress_api_paste_ini)
 
   create_resources('congress_config', $congress_config)
+  create_resources('congress_api_paste_ini', $congress_api_paste_ini)
 }

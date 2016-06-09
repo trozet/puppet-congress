@@ -1,7 +1,7 @@
 # The congress::db::mysql class implements mysql backend for congress
 #
 # This class can be used to create tables, users and grant
-# privelege for a mysql congress database.
+# privileges for a mysql congress database.
 #
 # == parameters
 #
@@ -65,5 +65,5 @@ class congress::db::mysql(
     allowed_hosts => $allowed_hosts,
   }
 
-  ::Openstacklib::Db::Mysql['congress'] ~> Exec<| title == 'congress-manage db_sync' |>
+  ::Openstacklib::Db::Mysql['congress'] ~> Exec<| title == 'congress-db-sync' |>
 }

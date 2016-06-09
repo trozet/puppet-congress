@@ -1,14 +1,23 @@
 #
-# Class to execute "congress-manage db_sync
+# Class to execute "congress-dbsync"
 #
-class congress::db::sync {
-  exec { 'congress-manage db_sync':
+# [*user*]
+#   (optional) User to run dbsync command.
+#   Defaults to 'congress'
+#
+class congress::db::sync (
+  $user = 'congress',
+){
+  exec { 'congress-db-sync':
+    command     => 'congress-dbsync --config-file /etc/congress/congress.conf',
     path        => '/usr/bin',
-    user        => 'congress',
     refreshonly => true,
-    subscribe   => [Package['congress'], congress_config['database/connection']],
-    require     => User['congress'],
+    user        => $user,
+    logoutput   => on_failure,
   }
 
-  Exec['congress-manage db_sync'] ~> Service<| title == 'congress' |>
+  Package<| tag == 'congress-package' |> ~> Exec['congress-db-sync']
+  Exec['congress-db-sync'] ~> Service<| tag == 'congress-db-sync-service' |>
+  Congress_config<||> ~> Exec['congress-db-sync']
+  Congress_config<| title == 'database/connection' |> ~> Exec['congress-db-sync']
 }

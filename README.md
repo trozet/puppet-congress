@@ -1,11 +1,13 @@
-congress
-=======
+Congress
+====
+
+8.0.0 - 2016.1.0 - Mitaka
 
 #### Table of Contents
 
-1. [Overview - What is the congress module?](#overview)
+1. [Overview - What is the Congress module?](#overview)
 2. [Module Description - What does the module do?](#module-description)
-3. [Setup - The basics of getting started with congress](#setup)
+3. [Setup - The basics of getting started with Congress](#setup)
 4. [Implementation - An under-the-hood peek at what the module is doing](#implementation)
 5. [Limitations - OS compatibility, etc.](#limitations)
 6. [Development - Guide for contributing to the module](#development)
@@ -14,40 +16,39 @@ congress
 Overview
 --------
 
-The congress module is a part of [OpenStack](https://github.com/openstack), an effort by the Openstack infrastructure team to provide continuous integration testing and code review for Openstack and Openstack community projects not part of the core software.  The module its self is used to flexibly configure and manage the FIXME service for Openstack.
+The Congress module is a part of [OpenStack](https://github.com/openstack), an effort by the OpenStack infrastructure team to provide continuous integration testing and code review for OpenStack and OpenStack community projects not part of the core software.  The module its self is used to flexibly configure and manage the Policy service for OpenStack.
 
 Module Description
 ------------------
 
-The congress module is a thorough attempt to make Puppet capable of managing the entirety of congress.  This includes manifests to provision region specific endpoint and database connections.  Types are shipped as part of the congress module to assist in manipulation of configuration files.
+The Congress module is a thorough attempt to make Puppet capable of managing the entirety of Congress.  This includes manifests to provision region specific endpoint and database connections.  Types are shipped as part of the Congress module to assist in manipulation of configuration files.
 
 Setup
 -----
 
-**What the congress module affects**
+**What the Congress module affects**
 
-* [congress](https://wiki.openstack.org/wiki/congress), the FIXME service for Openstack.
+* [congress](http://docs.openstack.org/developer/congress/), the Policy service for OpenStack.
 
-### Installing congress
+### Installing Congress
 
-    congress is not currently in Puppet Forge, but is anticipated to be added soon.  Once that happens, you'll be able to install congress with:
     puppet module install openstack/congress
 
-### Beginning with congress
+### Beginning with Congress
 
-To utilize the congress module's functionality you will need to declare multiple resources.  The following is a modified excerpt from the [openstack module](https://github.com/stackfoge/puppet-openstack).  This is not an exhaustive list of all the components needed, we recommend you consult and understand the [openstack module](https://github.com/stackforge/puppet-openstack) and the [core openstack](http://docs.openstack.org) documentation.
+To utilize the Congress module's functionality you will need to declare multiple resources.  This is not an exhaustive list of all the components needed, we recommend you consult and understand the [core OpenStack](http://docs.openstack.org) documentation.
 
 Implementation
 --------------
 
-### congress
+### Congress
 
-congress is a combination of Puppet manifest and ruby code to delivery configuration and extra functionality through types and providers.
+Congress is a combination of Puppet manifest and ruby code to delivery configuration and extra functionality through types and providers.
 
 Limitations
 ------------
 
-* All the congress types use the CLI tools and so need to be ran on the congress node.
+* All the Congress types use the CLI tools and so need to be ran on the Congress node.
 
 Beaker-Rspec
 ------------
@@ -70,7 +71,7 @@ Development
 
 Developer documentation for the entire puppet-openstack project.
 
-* https://wiki.openstack.org/wiki/Puppet
+* http://docs.openstack.org/developer/puppet-openstack-guide/
 
 Contributors
 ------------

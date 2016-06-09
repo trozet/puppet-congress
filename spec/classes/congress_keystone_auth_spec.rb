@@ -26,46 +26,45 @@ describe 'congress::keystone::auth' do
       :roles   => ['admin']
     )}
 
-    it { is_expected.to contain_keystone_service('congress').with(
+    it { is_expected.to contain_keystone_service('congress::policy').with(
       :ensure      => 'present',
-      :type        => 'FIXME',
-      :description => 'congress FIXME Service'
+      :description => 'OpenStack Policy Service'
     ) }
 
-    it { is_expected.to contain_keystone_endpoint('RegionOne/congress').with(
+    it { is_expected.to contain_keystone_endpoint('RegionOne/congress::policy').with(
       :ensure       => 'present',
-      :public_url   => 'http://127.0.0.1:FIXME',
-      :admin_url    => 'http://127.0.0.1:FIXME',
-      :internal_url => 'http://127.0.0.1:FIXME',
+      :public_url   => 'http://127.0.0.1:8042',
+      :admin_url    => 'http://127.0.0.1:8042',
+      :internal_url => 'http://127.0.0.1:8042',
     ) }
   end
 
-  describe 'when overriding URL paramaters' do
+  describe 'when overriding URL parameters' do
     let :params do
       { :password     => 'congress_password',
         :public_url   => 'https://10.10.10.10:80',
         :internal_url => 'http://10.10.10.11:81',
-        :admin_url    => 'http://10.10.10.12:81', }
+        :admin_url    => 'http://10.10.10.12:81' }
     end
 
-    it { is_expected.to contain_keystone_endpoint('RegionOne/congress').with(
+    it { is_expected.to contain_keystone_endpoint('RegionOne/congress::policy').with(
       :ensure       => 'present',
       :public_url   => 'https://10.10.10.10:80',
       :internal_url => 'http://10.10.10.11:81',
-      :admin_url    => 'http://10.10.10.12:81',
+      :admin_url    => 'http://10.10.10.12:81'
     ) }
   end
 
   describe 'when overriding auth name' do
     let :params do
       { :password => 'foo',
-        :auth_name => 'congressy' }
+        :auth_name => 'congressany' }
     end
 
-    it { is_expected.to contain_keystone_user('congressy') }
-    it { is_expected.to contain_keystone_user_role('congressy@services') }
-    it { is_expected.to contain_keystone_service('congressy') }
-    it { is_expected.to contain_keystone_endpoint('RegionOne/congressy') }
+    it { is_expected.to contain_keystone_user('congressany') }
+    it { is_expected.to contain_keystone_user_role('congressany@services') }
+    it { is_expected.to contain_keystone_service('congressany::policy') }
+    it { is_expected.to contain_keystone_endpoint('RegionOne/congressany::policy') }
   end
 
   describe 'when overriding service name' do
@@ -77,8 +76,8 @@ describe 'congress::keystone::auth' do
 
     it { is_expected.to contain_keystone_user('congress') }
     it { is_expected.to contain_keystone_user_role('congress@services') }
-    it { is_expected.to contain_keystone_service('congress_service') }
-    it { is_expected.to contain_keystone_endpoint('RegionOne/congress_service') }
+    it { is_expected.to contain_keystone_service('congress_service::policy') }
+    it { is_expected.to contain_keystone_endpoint('RegionOne/congress_service::policy') }
   end
 
   describe 'when disabling user configuration' do
@@ -92,10 +91,9 @@ describe 'congress::keystone::auth' do
 
     it { is_expected.not_to contain_keystone_user('congress') }
     it { is_expected.to contain_keystone_user_role('congress@services') }
-    it { is_expected.to contain_keystone_service('congress').with(
+    it { is_expected.to contain_keystone_service('congress::policy').with(
       :ensure      => 'present',
-      :type        => 'FIXME',
-      :description => 'congress FIXME Service'
+      :description => 'OpenStack Policy Service'
     ) }
 
   end
@@ -112,10 +110,9 @@ describe 'congress::keystone::auth' do
 
     it { is_expected.not_to contain_keystone_user('congress') }
     it { is_expected.not_to contain_keystone_user_role('congress@services') }
-    it { is_expected.to contain_keystone_service('congress').with(
+    it { is_expected.to contain_keystone_service('congress::policy').with(
       :ensure      => 'present',
-      :type        => 'FIXME',
-      :description => 'congress FIXME Service'
+      :description => 'OpenStack Policy Service'
     ) }
 
   end

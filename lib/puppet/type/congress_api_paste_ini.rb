@@ -1,9 +1,9 @@
-Puppet::Type.newtype(:congress_config) do
+Puppet::Type.newtype(:congress_api_paste_ini) do
 
   ensurable
 
   newparam(:name, :namevar => true) do
-    desc 'Section/setting name to manage from congress.conf'
+    desc 'Section/setting name to manage from /etc/congress/api_paste.ini'
     newvalues(/\S+\/\S+/)
   end
 
@@ -14,7 +14,6 @@ Puppet::Type.newtype(:congress_config) do
       value.capitalize! if value =~ /^(true|false)$/i
       value
     end
-    newvalues(/^[\S ]*$/)
 
     def is_to_s( currentvalue )
       if resource.secret?
@@ -35,7 +34,9 @@ Puppet::Type.newtype(:congress_config) do
 
   newparam(:secret, :boolean => true) do
     desc 'Whether to hide the value from Puppet logs. Defaults to `false`.'
+
     newvalues(:true, :false)
+
     defaultto false
   end
 
@@ -45,7 +46,7 @@ Puppet::Type.newtype(:congress_config) do
   end
 
   autorequire(:package) do
-    'congress'
+    'congress-common'
   end
 
 end

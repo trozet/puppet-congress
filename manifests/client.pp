@@ -1,27 +1,22 @@
-# == Class: congress::client
 #
-# Installs congress client.
+# Installs the congress python library.
 #
-# === Parameters
-#
-# [*ensure*]
-#   (optional) Ensure state of the package.
-#   Defaults to 'present'.
+# == parameters
+#  [*ensure*]
+#    ensure state for pachage.
 #
 class congress::client (
   $ensure = 'present'
 ) {
 
-  package { 'python-congressclient':
+  include ::congress::params
+
+  # there is no congressclient yet
+  package { 'python-ceilometerclient':
     ensure => $ensure,
+    name   => $::congress::params::client_package_name,
     tag    => 'openstack',
   }
 
-  if $ensure == 'present' {
-    include '::openstacklib::openstackclient'
-  } else {
-    class { '::openstacklib::openstackclient':
-      package_ensure => $ensure,
-    }
-  }
 }
+

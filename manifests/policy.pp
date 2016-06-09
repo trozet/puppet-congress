@@ -35,5 +35,5 @@ class congress::policy (
   }
 
   create_resources('openstacklib::policy::base', $policies)
-
+  oslo::policy { 'congress_config': policy_file => $policy_path }
 }
