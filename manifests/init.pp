@@ -263,12 +263,13 @@ class congress(
   $kombu_ssl_version                  = $::os_service_default,
   $kombu_reconnect_delay              = $::os_service_default,
   $amqp_durable_queues                = false,
+  $datasource_list                    = $::congress::params::datasource_list,
   $service_provider                   = $::congress::params::service_provider,
   $service_name                       = $::congress::params::service_name,
   $sync_db                            = true,
 ) inherits congress::params {
   congress_config {
-    'DEFAULT/drivers'     : value => 'congress.datasources.neutronv2_driver.NeutronV2Driver,congress.datasources.glancev2_driver.GlanceV2Driver,congress.datasources.nova_driver.NovaDriver,congress.datasources.keystone_driver.KeystoneDriver,congress.datasources.ceilometer_driver.CeilometerDriver,congress.datasources.cinder_driver.CinderDriver';
+    'DEFAULT/drivers'     : value => $datasource_list;
     'DEFAULT/policy_path' : value => '/etc/congress/snapshot/';
     'DEFAULT/log_file'    : value => 'congress.log';
     'DEFAULT/log_dir'     : value => '/var/log/congress/';
