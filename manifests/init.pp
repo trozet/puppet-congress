@@ -8,6 +8,14 @@
 #   (optional) The state of congress packages
 #   Defaults to 'present'
 #
+# [*bind_host*]
+#   (optional) The IP/interface to bind to
+#   Defaults to $::os_service_default
+#
+# [*bind_port*]
+#   (optional) The port to use
+#   Defaults to $::os_service_default
+#
 # [*default_transport_url*]
 #    (optional) A URL representing the messaging driver to use and its full
 #    configuration. Transport URLs take the form:
@@ -247,6 +255,8 @@
 #
 class congress (
   $ensure_package                     = 'present',
+  $bind_host                          = $::os_service_default,
+  $bind_port                          = $::os_service_default,
   $default_transport_url              = $::os_service_default,
   $rpc_backend                        = 'rabbit',
   $rabbit_host                        = $::os_service_default,
@@ -314,6 +324,11 @@ class congress (
 
   resources { 'congress_config':
     purge  => $purge_config,
+  }
+
+  congress_config {
+    'DEFAULT/bind_host':               value => $bind_host;
+    'DEFAULT/bind_port':               value => $bind_port;
   }
 
   if $verbose {
